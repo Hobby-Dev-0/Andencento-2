@@ -14,8 +14,8 @@ r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
 
-@Andencento.on(admin_cmd(pattern=f"t(m|t) ?(.*)", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"t(m|t) ?(.*)", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="t(m|t) ?(.*)", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="t(m|t) ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -44,7 +44,7 @@ async def _(event):
                 start = datetime.datetime.now()
                 media_urls = upload_file(downloaded_file_name)
             except exceptions.TelegraphException as exc:
-                await eod(event, "ERROR: " + str(exc), 8)
+                await eod(event, f"ERROR: {str(exc)}", 8)
                 os.remove(downloaded_file_name)
             else:
                 end = datetime.datetime.now()

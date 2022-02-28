@@ -18,10 +18,7 @@ GMute.__table__.create(checkfirst=True)
 
 def is_gmuted(sender, chat_id):
     user = SESSION.query(GMute).get((str(sender), str(chat_id)))
-    if user:
-        return True
-    else:
-        return False
+    return bool(user)
 
 
 def gmute(sender, chat_id):
@@ -31,7 +28,6 @@ def gmute(sender, chat_id):
 
 
 def ungmute(sender, chat_id):
-    rem = SESSION.query(GMute).get((str(sender), str(chat_id)))
-    if rem:
+    if rem := SESSION.query(GMute).get((str(sender), str(chat_id))):
         SESSION.delete(rem)
         SESSION.commit()

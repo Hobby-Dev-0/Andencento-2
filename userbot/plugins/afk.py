@@ -133,8 +133,7 @@ async def _(event):
                 event.chat_id, f"**I'm going afk🚶** \n\n**Because :** {reason}", file=userpic
             )
         else:
-            await bot.send_message(
-                event.chat_id, f"**I am Going afk!**🚶", file=userpic)
+            await bot.send_message(event.chat_id, "**I am Going afk!**🚶", file=userpic)
         await asyncio.sleep(0.001)
         await event.delete()
         try:
@@ -145,9 +144,11 @@ async def _(event):
                  )
             else:
                 await bot.send_message(
-                  Config.LOGGER_ID,
-                  f"#AFKTRUE \nAFK mode = **True**",file=userpic
-            )
+                    Config.LOGGER_ID,
+                    "#AFKTRUE \\nAFK mode = **True**",
+                    file=userpic,
+                )
+
         except Exception as e:  # pylint:disable=C0103,W0703
             logger.warn(str(e))  # pylint:disable=E06
 
@@ -170,16 +171,13 @@ last_night_message = {}
 
 @Andencento.on(events.NewMessage(outgoing=True))
 async def set_not_night(event):
-    global USER_night 
-    global night_time 
+    global USER_night
+    global night_time
     global last_night_message
     current_message = event.message.message
     if ".night" not in current_message and "yes" in USER_night:
         try:
-            await bot.send_message(
-                Config.LOGGER_ID,
-                f"#NIGHT \n\nNight Mode :  **TRUE**",
-            )
+            await bot.send_message(Config.LOGGER_ID, "#NIGHT \\n\\nNight Mode :  **TRUE**")
         except Exception as e:
             await bot.send_message(
                 event.chat_id,
@@ -204,24 +202,19 @@ async def _(event):
     USER_night = {}
     night_time = None
     last_night_message = {}
-    reason = event.pattern_match.group(1)
     if not USER_night:
+        reason = event.pattern_match.group(1)
         last_seen_status = await bot(
             functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
         )
         if isinstance(last_seen_status.rules, types.PrivacyValueAllowAll):
             night_time = datetime.datetime.now()
         USER_night = f"yes: {reason}"
-        if reason:
-            await event.edit(f"**Bye Fellas!!** \n\nTime to sleep 😴")
-        else:
-            await event.edit(f"**Bye Fellas!!** \n\nTime to sleep 😴")
+        await event.edit("**Bye Fellas!!** \\n\\nTime to sleep 😴")
         await asyncio.sleep(5)
         await event.delete()
         try:
-            await bot.send_message(
-                Config.LOGGER_ID, f"Time to sleep 😴"
-            )
+            await bot.send_message(Config.LOGGER_ID, "Time to sleep 😴")
         except Exception as e:
             logger.warn(str(e))
 
@@ -249,7 +242,7 @@ async def on_night(event):
             datime_since_night = now - night_time
             time = float(datime_since_night.seconds)
             days = time // (24 * 3600)
-            time = time % (24 * 3600)
+            time %= 24 * 3600
             hours = time // 3600
             time %= 3600
             minutes = time // 60
@@ -276,8 +269,9 @@ async def on_night(event):
         message_to_reply = (
             f"My Master Has Been Gone For {night_since}\nWhere He Is: **On Bed Sleeping** "
             if reason
-            else f"I'm sleeping right now!!"
+            else "I'm sleeping right now!!"
         )
+
         msg = await event.reply(message_to_reply)
         await asyncio.sleep(5)
         if event.chat_id in last_night_message:

@@ -19,7 +19,7 @@ async def _(event):
             ),
         )
     except asyncurban.WordNotFoundError:
-        await edit_or_reply(event, "No result found for **" + word + "**")
+        await edit_or_reply(event, f"No result found for **{word}**")
 
 
 @Andencento.on(admin_cmd(pattern="meaning (.*)"))

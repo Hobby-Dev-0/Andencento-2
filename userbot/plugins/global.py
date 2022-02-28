@@ -109,22 +109,22 @@ async def already(event):
 
 @Andencento.on(events.ChatAction)
 async def _(event):
-    if event.user_joined or event.added_by:
-        user = await event.get_user()
-        chat = await event.get_chat()
-        if is_gbanned(str(user.id)):
-            if chat.admin_rights:
-                try:
-                    await event.client.edit_permissions(
-                        chat.id,
-                        user.id,
-                        view_messages=False,
-                    )
-                    gban_watcher = f"⚠️⚠️**Warning**⚠️⚠️\n\n`Gbanned User Joined the chat!!`\n**⚜️ Victim Id :**  [{user.first_name}](tg://user?id={user.id})\n"
-                    gban_watcher += f"**🔥 Action 🔥**  \n`Banned this piece of shit....` **AGAIN!**"
-                    await event.reply(gban_watcher)
-                except BaseException:
-                    pass
+    if not event.user_joined and not event.added_by:
+        return
+    user = await event.get_user()
+    chat = await event.get_chat()
+    if is_gbanned(str(user.id)) and chat.admin_rights:
+        try:
+            await event.client.edit_permissions(
+                chat.id,
+                user.id,
+                view_messages=False,
+            )
+            gban_watcher = f"⚠️⚠️**Warning**⚠️⚠️\n\n`Gbanned User Joined the chat!!`\n**⚜️ Victim Id :**  [{user.first_name}](tg://user?id={user.id})\n"
+            gban_watcher += "**🔥 Action 🔥**  \\n`Banned this piece of shit....` **AGAIN!**"
+            await event.reply(gban_watcher)
+        except BaseException:
+            pass
 
 
 @Andencento.on(admin_cmd(pattern=r"gkick ?(.*)"))
@@ -174,7 +174,7 @@ async def gm(event):
         userid = event.pattern_match.group(1)
     elif reply is not None:
         userid = reply.sender_id
-    elif private is True:
+    elif private:
         userid = event.chat_id
     else:
         return await eod(event, "Need a user to gmute. Reply or give userid to gmute them..")
@@ -211,7 +211,7 @@ async def endgmute(event):
         userid = event.pattern_match.group(1)
     elif reply is not None:
         userid = reply.sender_id
-    elif private is True:
+    elif private:
         userid = event.chat_id
     else:
         return await eod(event,"Please reply to a user or add their into the command to ungmute them.")
@@ -241,7 +241,7 @@ from . import *
 async def get_full_user(event):  
     args = event.pattern_match.group(1).split(':', 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
@@ -264,7 +264,7 @@ async def get_full_user(event):
         try:
             user_obj = await event.client.get_entity(user)
         except Exception as err:
-            return await event.edit("Error... Please report at @AndencentoSupport", str(err))           
+            return await event.edit("Error... Please report at @AndencentoSupport", str(err))
     return user_obj, extra
 
 global hawk,moth
@@ -305,7 +305,7 @@ async def gben(userbot):
         if not rank:
             rank = "ㅤㅤ"
     except:
-        return await dark.edit(f"**Something W3NT Wrong 🤔**")
+        return await dark.edit("**Something W3NT Wrong 🤔**")
     if user:
         telchanel = [d.entity.id
                      for d in await userbot.client.get_dialogs()
@@ -325,7 +325,7 @@ async def gben(userbot):
           except:
              pass
     else:
-        await dark.edit(f"**Reply to a user you dumbo !!**")
+        await dark.edit("**Reply to a user you dumbo !!**")
     return await dark.edit(
         f"**Globally promoted [{user.first_name}](tg://user?id={user.id})\n On Chats😏 : {i} **"
     )
@@ -355,7 +355,7 @@ async def gben(userbot):
         if not rank:
             rank = "ㅤㅤ"
     except:
-        return await dark.edit(f"**Something W3NT Wrong 🤔**")
+        return await dark.edit("**Something W3NT Wrong 🤔**")
     if user:
         telchanel = [d.entity.id
                      for d in await userbot.client.get_dialogs()
@@ -375,7 +375,7 @@ async def gben(userbot):
           except:
              pass
     else:
-        await dark.edit(f"**Reply to a user you dumbo !!**")
+        await dark.edit("**Reply to a user you dumbo !!**")
     return await dark.edit(
         f"**Globally Demoted [{user.first_name}](tg://user?id={user.id})\n On Chats😏 : {i} **"
     )

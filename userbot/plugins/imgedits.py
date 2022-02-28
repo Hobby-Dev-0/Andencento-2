@@ -20,7 +20,7 @@ async def fun(event):
     lol = await bot.download_media(reply.media, path)
     await eor(event, "Editing In Progress...")
     file_name = "fishy.jpg"
-    hehe = path + "/" + file_name
+    hehe = f'{path}/{file_name}'
     img = cv2.imread(lol)
     H,W = img.shape[:2]
     fps = 30
@@ -51,7 +51,7 @@ async def fun(event):
     lol = await bot.download_media(reply.media, path)
     await eor(event, "Warping In Progress...")
     file_name = "warped.jpg"
-    hehe = path + "/" + file_name
+    hehe = f'{path}/{file_name}'
     img = cv2.imread(lol)
     H,W = img.shape[:2]
     fps = 30
@@ -83,7 +83,7 @@ async def fun(event):
     lol = await bot.download_media(reply.media, path)
     await eor(event, "Distortion In Progress...")
     file_name = "dist.jpg"
-    hehe = path + "/" + file_name
+    hehe = f'{path}/{file_name}'
     img = cv2.imread(lol)
     H,W = img.shape[:2]
     fps = 30

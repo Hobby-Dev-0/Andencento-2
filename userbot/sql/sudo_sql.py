@@ -29,8 +29,7 @@ def add_sudo(chat_id):
 
 
 def rem_sudo(chat_id):
-    rem = SESSION.query(Sudo).get(str(chat_id))
-    if rem:
+    if rem := SESSION.query(Sudo).get(str(chat_id)):
         SESSION.delete(rem)
         SESSION.commit()
 
@@ -38,7 +37,4 @@ def rem_sudo(chat_id):
 def all_sudo():
     rem = SESSION.query(Sudo).all()
     SESSION.close()
-    if rem:
-        return rem
-    else:
-        return 1234
+    return rem or 1234

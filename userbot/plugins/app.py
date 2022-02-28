@@ -14,8 +14,9 @@ async def apk(event):
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
         page = requests.get(
-            "https://play.google.com/store/search?q=" + final_name + "&c=apps"
+            f"https://play.google.com/store/search?q={final_name}&c=apps"
         )
+
         str(page.status_code)
         soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
@@ -47,7 +48,7 @@ async def apk(event):
             .img["data-src"]
         )
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
-        app_details += " <b>" + app_name + "</b>"
+        app_details += f" <b>{app_name}</b>"
         app_details += (
             "\n\n<code>Developer :</code> <a href='"
             + app_dev_link
@@ -72,7 +73,7 @@ async def apk(event):
     except IndexError:
         await event.edit("No result found in search. Please enter **Valid app name**")
     except Exception as err:
-        await event.edit("Exception Occured:- " + str(err))
+        await event.edit(f"Exception Occured:- {str(err)}")
 
 
 @Andencento.on(admin_cmd(pattern="appr (.*)"))
@@ -86,8 +87,9 @@ async def apkr(event):
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
         page = requests.get(
-            "https://play.google.com/store/search?q=" + final_name + "&c=apps"
+            f"https://play.google.com/store/search?q={final_name}&c=apps"
         )
+
         str(page.status_code)
         soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
@@ -119,7 +121,7 @@ async def apkr(event):
             .img["data-src"]
         )
         app_details = "<a href='" + app_icon + "'>📲&#8203;</a>"
-        app_details += " <b>" + app_name + "</b>"
+        app_details += f" <b>{app_name}</b>"
         app_details += (
             "\n\n<code>Developer :</code> <a href='"
             + app_dev_link
@@ -145,7 +147,7 @@ async def apkr(event):
     except IndexError:
         await event.edit("No result found in search. Please enter **Valid app name**")
     except Exception as err:
-        await event.edit("Exception Occured:- " + str(err))
+        await event.edit(f"Exception Occured:- {str(err)}")
 
 
 @Andencento.on(admin_cmd(pattern="mods ?(.*)"))

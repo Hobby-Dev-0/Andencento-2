@@ -106,8 +106,13 @@ async def kang(args):
                     pack += 1
                     packname = f"{user.username}_{pack}"
                     packnick = f"@{user.username}'s_{pack}"
-                    await args.edit("`Switching to Pack " + str(pack) +
-                                    " due to insufficient space`")
+                    await args.edit(
+                        (
+                            f"`Switching to Pack {str(pack)}"
+                            + " due to insufficient space`"
+                        )
+                    )
+
                     await conv.send_message(packname)
                     x = await conv.get_response()
                     if x.text == "Invalid pack selected.":
@@ -225,7 +230,6 @@ async def kang(args):
 async def resize_photo(photo):
     """ Resize the given photo to 512x512 """
     image = Image.open(photo)
-    maxsize = (512, 512)
     if (image.width and image.height) < 512:
         size1 = image.width
         size2 = image.height
@@ -242,6 +246,7 @@ async def resize_photo(photo):
         sizenew = (size1new, size2new)
         image = image.resize(sizenew)
     else:
+        maxsize = (512, 512)
         image.thumbnail(maxsize)
 
     return image

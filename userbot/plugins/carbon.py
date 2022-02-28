@@ -135,7 +135,7 @@ async def carbon_api(e):
         k_skeme.send_keys(Keys.ENTER)
     else:
         color_scheme = str(random.randint(1, 29))
-        driver.find_element_by_id(("downshift-0-item-" + color_scheme)).click()
+        driver.find_element_by_id(f"downshift-0-item-{color_scheme}").click()
     driver.find_element_by_id("export-menu").click()
     driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
     driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
@@ -160,7 +160,7 @@ async def carbon_api(e):
     await user.delete()
 
 
-@Andencento.on(admin_cmd(pattern=f"kar1(?: |$)(.*)", outgoing=True))
+@Andencento.on(admin_cmd(pattern="kar1(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="kar1(?: |$)(.*)", allow_sudo=True))
 async def carbon_api(e):
     if e.fwd_from:
@@ -221,7 +221,7 @@ async def carbon_api(e):
     await user.delete()  # Deleting msg
 
 
-@Andencento.on(admin_cmd(pattern=f"kar2(?: |$)(.*)", outgoing=True))
+@Andencento.on(admin_cmd(pattern="kar2(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="kar2(?: |$)(.*)", allow_sudo=True))
 async def carbon_api(e):
     if e.fwd_from:
@@ -272,17 +272,18 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon2",
+        caption="Here's your Karbon2",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
 
     os.remove("./carbon.png")
     # Removing carbon.png after uploading
     await user.delete()  # Deleting msg
 
 
-@Andencento.on(admin_cmd(pattern=f"kar3(?: |$)(.*)", outgoing=True))
+@Andencento.on(admin_cmd(pattern="kar3(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="kar3(?: |$)(.*)", allow_sudo=True))
 async def carbon_api(e):
     if e.fwd_from:
@@ -337,17 +338,18 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon3",
+        caption="Here's your Karbon3",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
 
     os.remove("./carbon.png")
     # Removing carbon.png after uploading
     await user.delete()  # Deleting msg
 
 
-@Andencento.on(admin_cmd(pattern=f"kar4(?: |$)(.*)", outgoing=True))
+@Andencento.on(admin_cmd(pattern="kar4(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="kar4(?: |$)(.*)", allow_sudo=True))
 async def carbon_api(e):
     if e.fwd_from:
@@ -402,17 +404,18 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon4 ",
+        caption="Here's your Karbon4 ",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
 
     os.remove("./carbon.png")
     # Removing carbon.png after uploading
     await user.delete()  # Deleting msg
 
 
-@Andencento.on(admin_cmd(pattern=f"rgbk2(?: |$)(.*)", outgoing=True))
+@Andencento.on(admin_cmd(pattern="rgbk2(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="rgbk2(?: |$)(.*)", allow_sudo=True))
 async def carbon_api(e):
     if e.fwd_from:
@@ -472,16 +475,17 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your karbonrgb",
+        caption="Here's your karbonrgb",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
     os.remove("./carbon.png")
     # Removing carbon.png after uploading
     await user.delete()  # Deleting msg
 
 
-@Andencento.on(admin_cmd(pattern=f"kargb(?: |$)(.*)", outgoing=True))
+@Andencento.on(admin_cmd(pattern="kargb(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="kargb(?: |$)(.*)", allow_sudo=True))
 async def carbon_api(e):
     if e.fwd_from:
@@ -571,10 +575,11 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your karbonrgb",
+        caption="Here's your karbonrgb",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
     os.remove("./carbon.png")
     await user.delete()  # Deleting msg
 

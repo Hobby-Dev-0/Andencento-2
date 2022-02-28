@@ -13,11 +13,7 @@ danger = [
 import os, asyncio
 from pathlib import Path
 def handler():
-  k = os.environ.get("HANDLER", ".")
-  if k:
-    return k
-  else:
-    return "."
+  return k if (k := os.environ.get("HANDLER", ".")) else "."
   
 from . import *
 from telethon.tl.functions.channels import JoinChannelRequest as join
@@ -33,13 +29,10 @@ async def safety(event):
   file = await bot.download_media(tag, "userbot/plugins")
   X = ""
   for word in danger:
-    f = open(file, "r")
-    k = re.search(word, f.read())
-    f.close()
+    with open(file, "r") as f:
+      k = re.search(word, f.read())
     if k:
-      X += word + " "
-    else:
-      pass
+      X += f'{word} '
   if X != "":
     await event.edit(f'Alert Danger Word Found in Your tagged plug-in\nthe danger word is: \n**{X}**\nif you want to install then type `{x}install -f`')
     try:

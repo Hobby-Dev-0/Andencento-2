@@ -45,9 +45,7 @@ async def _(event):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8") + "\r\n"
+            message = "".join(m.decode("UTF-8") + "\r\n" for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -100,7 +98,7 @@ async def get_dogbin_content(dog_url):
         )
         return
     except exceptions.Timeout as TimeoutErr:
-        await eod(user, "Request timed out." + str(TimeoutErr))
+        await eod(user, f"Request timed out.{str(TimeoutErr)}")
         return
     except exceptions.TooManyRedirects as RedirectsErr:
         await eod(user, "Request exceeded the configured number of maximum redirections."
@@ -135,18 +133,14 @@ async def _(event):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                # message += m.decode("UTF-8") + "\r\n"
-                message += m.decode("UTF-8")
+            message = "".join(m.decode("UTF-8") for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
     else:
         message = f"SYNTAX: `{hl}neko <long text to include>`"
     if downloaded_file_name.endswith(".py"):
-        py_file = ""
-        py_file += ".py"
+        py_file = "" + ".py"
         data = message
         key = (
             requests.post("https://nekobin.com/api/documents", json={"content": data})

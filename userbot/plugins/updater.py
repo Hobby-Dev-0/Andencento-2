@@ -197,8 +197,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
-            "https://", "https://api:" + HEROKU_API_KEY + "@"
+            "https://", f"https://api:{HEROKU_API_KEY}@"
         )
+
         if "heroku" in repo.remotes:
             remote = repo.remote("heroku")
             remote.set_url(heroku_git_url)
@@ -228,7 +229,7 @@ async def upstream(event):
     event = await edit_or_reply(event, "`Hard-Update In Progress... \nPlease wait until docker build is finished...`")
     off_repo = "https://github.com/The-Andencento /Andencento "
     os.chdir("/app")
-    git_user = f"rm -rf .git"
+    git_user = "rm -rf .git"
     try:
         await runner.runcmd(git_user)
     except BaseException:

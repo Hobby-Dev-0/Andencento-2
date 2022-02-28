@@ -7,20 +7,20 @@ async def _(e):
     txt = random.choice(SONGS)
     await eor(e, txt)
 
-@Andencento.on(admin_cmd(pattern=f"hps$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"hps$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="hps$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="hps$", allow_sudo=True))
 async def _(e):
     txt = random.choice(HARRY)
     await eor(e, txt)
 
-@Andencento.on(admin_cmd(pattern=f"gott$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"gott$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="gott$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="gott$", allow_sudo=True))
 async def _(e):
     txt = random.choice(GOTT)
     await eor(e, txt)
 
-@Andencento.on(admin_cmd(pattern=f"gotm$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"gotm$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="gotm$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="gotm$", allow_sudo=True))
 async def _(e):
     txt = random.choice(GOTM)
     await eor(e, txt, link_preview=True)
@@ -43,8 +43,8 @@ async def _(e):
     txt = random.choice(QT)
     await eor(e, txt)
 
-@Andencento.on(admin_cmd(pattern=f"logic$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"logic$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="logic$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="logic$", allow_sudo=True))
 async def _(e):
     txt = random.choice(LOGIC)
     await eor(e, txt)

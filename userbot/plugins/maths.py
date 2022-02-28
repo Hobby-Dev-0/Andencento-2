@@ -54,15 +54,15 @@ async def find_cot(event):
 @Andencento.on(sudo_cmd(pattern="square ?(.*)", allow_sudo=True))
 async def square(event):
     input_str = float(event.pattern_match.group(1))
-    output = input_str * input_str
+    output = input_str**2
     await event.edit(f"**Square of** `{input_str}`==\n`{output}`")
 
 
 @Andencento.on(admin_cmd(pattern="cube ?(.*)"))
 @Andencento.on(sudo_cmd(pattern="cube ?(.*)", allow_sudo=True))
 async def cube(event):
-    input_str = float(event.pattern_match.group(1))  
-    output = input_str * input_str * input_str
+    input_str = float(event.pattern_match.group(1))
+    output = input_str**2 * input_str
     await event.edit(f"**Cube of** `{input_str}`==\n`{output}`")
 
 

@@ -80,9 +80,8 @@ if PM_ON_OFF != "DISABLE":
             return
         if str(event.chat_id) in DEVLIST:
             return
-        if not pm_sql.is_approved(event.chat_id):
-            if not event.chat_id in PM_WARNS:
-                pm_sql.approve(event.chat_id, "outgoing")
+        if not pm_sql.is_approved(event.chat_id) and event.chat_id not in PM_WARNS:
+            pm_sql.approve(event.chat_id, "outgoing")
                 
     @bot.on(admin_cmd(pattern="(a|approve|allow)$"))
     async def approve(event):
@@ -238,8 +237,7 @@ if PM_ON_OFF != "DISABLE":
             if chat_ids in PREV_REPLY_MESSAGE:
                 await PREV_REPLY_MESSAGE[chat_ids].delete()
             PREV_REPLY_MESSAGE[chat_ids] = r
-            the_message = ""
-            the_message += "#BLOCK\n\n"
+            the_message = "" + "#BLOCK\n\n"
             the_message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
             the_message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
             try:
@@ -252,7 +250,7 @@ if PM_ON_OFF != "DISABLE":
                 return
             except BaseException:
                 pass
-        
+
         botusername = Config.BOT_USERNAME
         tap = await bot.inline_query(botusername, "pm_warn")
         hel_ = await tap[0].click(event.chat_id)

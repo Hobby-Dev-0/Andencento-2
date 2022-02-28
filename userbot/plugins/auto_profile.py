@@ -68,7 +68,7 @@ async def _(event):
 
         await asyncio.sleep(DEL_TIME_OUT)
 
-    await noob.edit(f"Auto Name has been started my Master")
+    await noob.edit("Auto Name has been started my Master")
 
 
 @Andencento.on(admin_cmd(pattern="autobio"))  # pylint:disable=E0602
@@ -136,9 +136,11 @@ async def mine(event):
         return
     """ For .reserved command, get a list of your reserved usernames. """
     result = await bot(GetAdminedPublicChannelsRequest())
-    output_str = ""
-    for channel_obj in result.chats:
-        output_str += f"{channel_obj.title}\n@{channel_obj.username}\n\n"
+    output_str = "".join(
+        f"{channel_obj.title}\n@{channel_obj.username}\n\n"
+        for channel_obj in result.chats
+    )
+
     await edit_or_reply(event, output_str)
 
 
