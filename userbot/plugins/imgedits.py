@@ -1,4 +1,4 @@
-import cv2
+"""import cv2
 import numpy as np
 import math
 from vcam import vcam,meshGen
@@ -115,3 +115,4 @@ CmdHelp("imgedits").add_command(
 ).add_warning(
   "✅ Harmless Module."
 ).add()
+"""
