@@ -64,8 +64,7 @@ async def get_user(event):
 async def slap(replied_user, event):
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
-    username = replied_user.user.username
-    if username:
+    if username := replied_user.user.username:
         slapped = "@{}".format(username)
     else:
         slapped = f"[{first_name}](tg://user?id={user_id})"
@@ -75,97 +74,95 @@ async def slap(replied_user, event):
     hit = random.choice(HIT)
     throw = random.choice(THROW)
 
-    caption = temp.format(
+    return temp.format(
         user1=user_mention, user2=slapped, item=item, hits=hit, throws=throw
     )
 
-    return caption
-
-@Andencento.on(admin_cmd(pattern=f"randi$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"randi$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="randi$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="randi$", allow_sudo=True))
 async def rendi(e):
-   txt = random.choice(RENDISTR)
-   await eor(e, txt)
+    txt = random.choice(RENDISTR)
+    await eor(e, txt)
    
    
-@Andencento.on(admin_cmd(pattern=f"habuse$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"habuse$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="habuse$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="habuse$", allow_sudo=True))
 async def thenus(e):
-   txt = random.choice(THANOS_STRINGS)
-   await eor(e, txt)
+    txt = random.choice(THANOS_STRINGS)
+    await eor(e, txt)
    
    
-@Andencento.on(admin_cmd(pattern=f"fuk$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"fuk$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="fuk$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="fuk$", allow_sudo=True))
 async def tapatap(e):
-   txt = random.choice(FUK_STRINGS)
-   await eor(e, txt)
+    txt = random.choice(FUK_STRINGS)
+    await eor(e, txt)
    
    
-@Andencento.on(admin_cmd(pattern=f"chu$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"chu$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="chu$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="chu$", allow_sudo=True))
 async def chut(e):
-   txt = random.choice(CHU_STRINGS)
-   await eor(e, txt)
+    txt = random.choice(CHU_STRINGS)
+    await eor(e, txt)
    
    
-@Andencento.on(admin_cmd(pattern=f"noob$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"noob$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="noob$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="noob$", allow_sudo=True))
 async def nub(e):
-   txt = random.choice(NOOBSTR)
-   await eor(e, txt)
+    txt = random.choice(NOOBSTR)
+    await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"run$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"run$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="run$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="run$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(RUNSREACTS)
     await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"gali$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"gali$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="gali$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="gali$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(GAALI_STR)
     await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"rape$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"rape$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="rape$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="rape$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(RAPE_STRINGS)
     await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"abuse$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"abuse$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="abuse$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="abuse$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(ABUSE_STRINGS)
     await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"gey$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"gey$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="gey$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="gey$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(GEY_STRINGS)
     await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"piro$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"piro$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="piro$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="piro$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(PRO_STRINGS)
     await eor(e, txt)
 
 
-@Andencento.on(admin_cmd(pattern=f"insult$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"insult$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="insult$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="insult$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(INSULT_STRINGS)
     await eor(e, txt)
 
-@Andencento.on(admin_cmd(pattern=f"hiabuse$", outgoing=True))
-@Andencento.on(sudo_cmd(pattern=f"hiabuse$", allow_sudo=True))
+@Andencento.on(admin_cmd(pattern="hiabuse$", outgoing=True))
+@Andencento.on(sudo_cmd(pattern="hiabuse$", allow_sudo=True))
 async def metoo(e):
     txt = random.choice(HIABUSE_STR)
     await eor(e, txt)
@@ -178,59 +175,60 @@ async def cry(e):
 @Andencento.on(admin_cmd(pattern="cp(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="cp(?:|$)(.*)", allow_sudo=True))
 async def copypasta(cp_e):
-    if not cp_e.text[0].isalpha() and cp_e.text[0] not in ("/", "#", "@", "!"):
-        textx = await cp_e.get_reply_message()
-        message = cp_e.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
+    if cp_e.text[0].isalpha() or cp_e.text[0] in ("/", "#", "@", "!"):
+        return
+
+    textx = await cp_e.get_reply_message()
+    message = cp_e.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await edit_or_reply(cp_e, "`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
+        return
+    reply_text = random.choice(EMOJIS)
+    b_char = random.choice(
+        message
+    ).lower()  # choose a random character in the message to be substituted with 🅱️
+    for owo in message:
+        if owo == " ":
+            reply_text += random.choice(EMOJIS)
+        elif owo in EMOJIS:
+            reply_text += owo
+            reply_text += random.choice(EMOJIS)
+        elif owo.lower() == b_char:
+            reply_text += "🅱️"
         else:
-            await edit_or_reply(cp_e, "`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
-            return
-        reply_text = random.choice(EMOJIS)
-        b_char = random.choice(
-            message
-        ).lower()  # choose a random character in the message to be substituted with 🅱️
-        for owo in message:
-            if owo == " ":
-                reply_text += random.choice(EMOJIS)
-            elif owo in EMOJIS:
-                reply_text += owo
-                reply_text += random.choice(EMOJIS)
-            elif owo.lower() == b_char:
-                reply_text += "🅱️"
-            else:
-                if bool(random.getrandbits(1)):
-                    reply_text += owo.upper()
-                else:
-                    reply_text += owo.lower()
-        reply_text += random.choice(EMOJIS)
-        await edit_or_reply(cp_e, reply_text)
+            reply_text += owo.upper() if bool(random.getrandbits(1)) else owo.lower()
+    reply_text += random.choice(EMOJIS)
+    await edit_or_reply(cp_e, reply_text)
 
 @Andencento.on(admin_cmd(pattern="owo(?: |$)(.*)", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="owo(?: |$)(.*)", allow_sudo=True))
 async def faces(owo):
     """ UwU """
-    if not owo.text[0].isalpha() and owo.text[0] not in ("/", "#", "@", "!"):
-        textx = await owo.get_reply_message()
-        message = owo.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await edit_or_reply(owo, "` UwU no text given! `")
-            return
+    if owo.text[0].isalpha() or owo.text[0] in ("/", "#", "@", "!"):
+        return
 
-        reply_text = re.sub(r"(r|l)", "w", message)
-        reply_text = re.sub(r"(R|L)", "W", reply_text)
-        reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
-        reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
-        reply_text = re.sub(r"\!+", " " + random.choice(UWUS), reply_text)
-        reply_text = reply_text.replace("ove", "uv")
-        reply_text += " " + random.choice(UWUS)
-        await edit_or_reply(owo, reply_text)
+    textx = await owo.get_reply_message()
+    message = owo.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await edit_or_reply(owo, "` UwU no text given! `")
+        return
+
+    reply_text = re.sub(r"(r|l)", "w", message)
+    reply_text = re.sub(r"(R|L)", "W", reply_text)
+    reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
+    reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
+    reply_text = re.sub(r"\!+", f" {random.choice(UWUS)}", reply_text)
+    reply_text = reply_text.replace("ove", "uv")
+    reply_text += f" {random.choice(UWUS)}"
+    await edit_or_reply(owo, reply_text)
 
 @Andencento.on(admin_cmd(pattern="react$", outgoing=True))
 @Andencento.on(sudo_cmd(pattern="react$", allow_sudo=True))
@@ -241,25 +239,27 @@ async def react_meme(react):
 @Andencento.on(sudo_cmd(pattern="clap(?: |$)(.*)", allow_sudo=True))
 async def claptext(memereview):
     """ Praise people! """
-    if not memereview.text[0].isalpha() and memereview.text[0] not in (
+    if memereview.text[0].isalpha() or memereview.text[0] in (
         "/",
         "#",
         "@",
         "!",
     ):
-        textx = await memereview.get_reply_message()
-        message = memereview.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await edit_or_reply(memereview, "`Hah, I don't clap pointlessly!`")
-            return
-        reply_text = "👏 "
-        reply_text += message.replace(" ", " 👏 ")
-        reply_text += " 👏"
-        await edit_or_reply(memereview, reply_text)
+        return
+
+    textx = await memereview.get_reply_message()
+    message = memereview.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await edit_or_reply(memereview, "`Hah, I don't clap pointlessly!`")
+        return
+    reply_text = "👏 "
+    reply_text += message.replace(" ", " 👏 ")
+    reply_text += " 👏"
+    await edit_or_reply(memereview, reply_text)
 
 
 CmdHelp("fun").add_command(

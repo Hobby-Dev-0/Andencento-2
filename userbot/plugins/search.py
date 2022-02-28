@@ -14,8 +14,7 @@ async def _(event):
             input_str.replace(" ", "+")
         )
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **UThoob** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -35,8 +34,7 @@ async def _(event):
             input_str.replace(" ", "+")
         )
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **duckduckgo** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -54,8 +52,7 @@ async def _(event):
     sample_url = "https://da.gd/s?url=https://www.altnews.in/?s={}".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **altnews** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -75,8 +72,7 @@ async def _(event):
             input_str.replace(" ", "+")
         )
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **var** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -94,8 +90,7 @@ async def _(event):
     sample_url = "https://da.gd/s?url=https://dashboard.heroku.com/apps/{}/logs".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await eor(event, "Let me **log** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -113,8 +108,7 @@ async def _(event):
     sample_url = "https://da.gd/s?url=https://dashboard.heroku.com/account/{}".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **Heroku Account** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -132,8 +126,7 @@ async def _(event):
     sample_url = "https://da.gd/s?url=https://indiankanoon.org/search/?formInput={}+sortby%3Amostrecent".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **Indiankanoon.com : Place** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -151,8 +144,7 @@ async def _(event):
     sample_url = "https://da.gd/s?url=https://mkp.gem.gov.in/search?q={}&sort_type=created_at_desc&_xhr=1".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me **gem.gov.in** that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )
@@ -170,8 +162,7 @@ async def _(event):
     sample_url = "https://da.gd/s?url=https://web.archive.org/web/*/{}".format(
         input_str.replace(" ", "+")
     )
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, "Let me run your link on wayback machine that for you:\n👉 [{}]({})\n`Thank me later 😉` ".format(
                 input_str, response_api.rstrip()
             )

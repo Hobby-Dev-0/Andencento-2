@@ -19,15 +19,16 @@ last_triggered_filters = {}  # pylint:disable=E0602
 async def on_snip(event):
     global last_triggered_filters
     name = event.raw_text
-    if event.chat_id in last_triggered_filters:
-        if name in last_triggered_filters[event.chat_id]:
-            # avoid userbot spam
-            # "I demand rights for us bots, we are equal to you humans." -Henri Koivuneva (t.me/UserbotTesting/2698)
-            return False
-    snips = get_all_filters(event.chat_id)
-    if snips:
+    if (
+        event.chat_id in last_triggered_filters
+        and name in last_triggered_filters[event.chat_id]
+    ):
+        # avoid userbot spam
+        # "I demand rights for us bots, we are equal to you humans." -Henri Koivuneva (t.me/UserbotTesting/2698)
+        return False
+    if snips := get_all_filters(event.chat_id):
         for snip in snips:
-            pattern = r"( |^|[^\w])" + re.escape(snip.keyword) + r"( |$|[^\w])"
+            pattern = f"( |^|[^\\w]){re.escape(snip.keyword)}( |$|[^\\w])"
             if re.search(pattern, name, flags=re.IGNORECASE):
                 if snip.snip_type == TYPE_PHOTO:
                     media = types.InputPhoto(
@@ -128,7 +129,7 @@ async def on_all_snip_delete(event):
     if event.fwd_from:
         return
     remove_all_filters(event.chat_id)
-    await eor(event, f"**All the Filters in current chat deleted successfully**")
+    await eor(event, "**All the Filters in current chat deleted successfully**")
 
 
 CmdHelp("filter").add_command(

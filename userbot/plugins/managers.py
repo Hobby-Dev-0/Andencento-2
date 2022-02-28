@@ -16,8 +16,7 @@ if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
 async def lst(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         msg = "📂 **Files in {} :**\n".format(input_str)
         files = os.listdir(input_str)
     else:
@@ -88,14 +87,12 @@ async def _(event):
     PROCESS_RUN_TIME = 100
     cmd = "ls -lh"
 
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_suser(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    OUTPUT = f"**Files in root directory:**\n"
+    OUTPUT = "**Files in root directory:**\\n"
     stdout, stderr = await process.communicate()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
@@ -123,14 +120,12 @@ async def _(event):
     PROCESS_RUN_TIME = 100
     cmd = "ls ./SAVED/"
 
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_suser(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    OUTPUT = f"**Files in SAVED directory:**\n"
+    OUTPUT = "**Files in SAVED directory:**\\n"
     stdout, stderr = await process.communicate()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(stdout)) as out_file:
@@ -162,16 +157,14 @@ async def _(event):
         src = src.strip()
         dst = dst.strip()
     cmd = f"mv ./SAVED/{src} ./SAVED/{dst}"
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_suser(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    OUTPUT = f"**Files in root directory:**\n"
     stdout, stderr = await process.communicate()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
+        OUTPUT = "**Files in root directory:**\\n"
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
             await bot.send_file(
@@ -201,16 +194,14 @@ async def _(event):
         src = src.strip()
         dst = dst.strip()
     cmd = f"mv ./DOWNLOADS/{src} ./DOWNLOADS/{dst}"
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_suser(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    OUTPUT = f"**Files in root directory:**\n"
     stdout, stderr = await process.communicate()
     if len(stdout) > Config.MAX_MESSAGE_SIZE_LIMIT:
+        OUTPUT = "**Files in root directory:**\\n"
         with io.BytesIO(str.encode(stdout)) as out_file:
             out_file.name = "exec.text"
             await bot.send_file(

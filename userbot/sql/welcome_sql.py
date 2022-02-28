@@ -53,8 +53,7 @@ def add_welcome(chat_id, previous_welcome, reply, f_mesg_id):
 
 def rm_welcome(chat_id):
     try:
-        rem = SESSION.query(Welcome).get(str(chat_id))
-        if rem:
+        if rem := SESSION.query(Welcome).get(str(chat_id)):
             SESSION.delete(rem)
             SESSION.commit()
             return True

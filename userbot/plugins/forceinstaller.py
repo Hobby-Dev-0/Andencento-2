@@ -30,7 +30,7 @@ async def install(event):
                 if shortname in CMD_LIST:
                     string = "Commands found in {}\n".format((os.path.basename(downloaded_file_name)))
                     for i in CMD_LIST[shortname]:
-                        string += "  •  " + i 
+                        string += f"  •  {i}"
                         string += "\n"
                         if b == 1:
                             a = "Installing.."
@@ -43,7 +43,10 @@ async def install(event):
                 return await event.edit(f"Installed module {os.path.basename(downloaded_file_name)}")
             else:
                 os.remove(downloaded_file_name)
-                return await event.edit(f"Failed to Install \nError\nModule already installed or unknown formet")
+                return await event.edit(
+                    "Failed to Install \\nError\\nModule already installed or unknown formet"
+                )
+
         except Exception as e: 
             await event.edit(f"Failed to Install \nError\n{str(e)}")
             return os.remove(downloaded_file_name)

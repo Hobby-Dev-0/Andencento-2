@@ -77,9 +77,7 @@ async def add_snip(event):
     if sq.add_note(trigger, stri, cht_id) is False:
         sq.rm_note(trigger)
         if sq.add_note(trigger, stri, cht_id) is False:
-            return await edit_or_reply(
-                event, f"Error Adding Snip.."
-            )
+            return await edit_or_reply(event, "Error Adding Snip..")
         return await eor(event, success.format("updated", trigger))
     return await eor(event, success.format("added", trigger))
 

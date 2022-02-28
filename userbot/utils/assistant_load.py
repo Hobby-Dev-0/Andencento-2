@@ -45,4 +45,4 @@ def start_assistant(shortname):
         mod = importlib.util.module_from_spec(spec)
         mod.tgbot = Andencento.tgbot
         spec.loader.exec_module(mod)
-        sys.modules["assistant" + shortname] = mod
+        sys.modules[f"assistant{shortname}"] = mod

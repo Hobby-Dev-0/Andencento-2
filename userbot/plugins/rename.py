@@ -9,7 +9,7 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from . import *
 
-thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
+thumb_image_path = f'{Config.TMP_DOWNLOAD_DIRECTORY}/thumb_image.jpg'
 
 
 def get_video_thumb(file, output=None, width=90):
@@ -73,9 +73,7 @@ async def _(event):
 async def _(event):
     if event.fwd_from:
         return
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
+    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     user = await eor(event, 
         "Renaming And Uploading File..."
     )
@@ -141,7 +139,6 @@ async def _(event):
         end_one = datetime.datetime.now()
         ms_one = (end_one - start).seconds
         if os.path.exists(downloaded_file_name):
-            thumb = None
             if not downloaded_file_name.endswith((".mkv", ".mp4", ".mp3", ".flac")):
                 await eor(event, 
                     "Sorry. But I don't think {} is a streamable file. Please try again.\n**Supported Formats**: MKV, MP4, MP3, FLAC".format(
@@ -149,17 +146,16 @@ async def _(event):
                     )
                 )
                 return False
+            thumb = None
             if os.path.exists(thumb_image_path):
                 thumb = thumb_image_path
             else:
                 thumb = get_video_thumb(downloaded_file_name, thumb_image_path)
             start = datetime.datetime.now()
             metadata = extractMetadata(createParser(downloaded_file_name))
-            duration = 0
             width = 0
             height = 0
-            if metadata.has("duration"):
-                duration = metadata.get("duration").seconds
+            duration = metadata.get("duration").seconds if metadata.has("duration") else 0
             if os.path.exists(thumb_image_path):
                 metadata = extractMetadata(createParser(thumb_image_path))
                 if metadata.has("width"):

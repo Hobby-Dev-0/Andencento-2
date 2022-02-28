@@ -9,24 +9,15 @@ from . import *
 async def tag(event):
     text = event.text
     user = event.pattern_match.group(2)
-    part = 0
-    if user:
-        users = f"{user}"
-    else:
-        users = ""
-    async for members in event.client.iter_partcipants(event.chat_id, 99):
-        part = part + 1
+    users = f"{user}" if user else ""
+    async for part, members in enumerate(event.client.iter_partcipants(event.chat_id, 99)):
         y = members.participants
-        if isinstance(y, admin):
-            if "admins" in text:
-                if not members.deleted:
-                    users+= f"\n[{get_display_name(members)}](tg://user?id={members.id})"
-        if "bots" in text:
-            if members.bot:
-                users+= f"\n[{get_display_name(members)}](tg://user?id={members.id})"
-        if "all" in text:
-            if not (members.bot or members.deleted):
-                users+= f"\n[{get_display_name(members)}](tg://user?id={members.id})"
+        if isinstance(y, admin) and "admins" in text and not members.deleted:
+            users+= f"\n[{get_display_name(members)}](tg://user?id={members.id})"
+        if "bots" in text and members.bot:
+            users+= f"\n[{get_display_name(members)}](tg://user?id={members.id})"
+        if "all" in text and not members.bot and not members.deleted:
+            users+= f"\n[{get_display_name(members)}](tg://user?id={members.id})"
     await event.client.send_message(event.chat_id)
     await event.delete()       
                   

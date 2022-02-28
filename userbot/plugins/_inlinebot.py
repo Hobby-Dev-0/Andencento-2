@@ -34,10 +34,7 @@ PM_WARNS = {}
 PREV_REPLY_MESSAGE = {}
 
 mybot = Config.BOT_USERNAME
-if mybot.startswith("@"):
-    botname = mybot
-else:
-    botname = f"@{mybot}"
+botname = mybot if mybot.startswith("@") else f"@{mybot}"
 LOG_GP = Config.LOGGER_ID
 mssge = (
     str(cstm_pmp)
@@ -63,32 +60,32 @@ def button(page, modules):
         pairs.append([modules[-1]])
     max_pages = ceil(len(pairs) / Row)
     pairs = [pairs[i : i + Row] for i in range(0, len(pairs), Row)]
-    buttons = []
-    for pairs in pairs[page]:
-        buttons.append(
-            [
-                custom.Button.inline(f"{Eiva_emoji} " + pair + f" {Eiva_emoji}", data=f"Information[{page}]({pair})")
-                for pair in pairs
-            ]
-        )
+    buttons = [
+        [
+            custom.Button.inline(
+                f"{Eiva_emoji} {pair}" + f" {Eiva_emoji}",
+                data=f"Information[{page}]({pair})",
+            )
+            for pair in pairs
+        ]
+        for pairs in pairs[page]
+    ]
 
     buttons.append(
         [
             custom.Button.inline(
-               f"◀️ Back {Eiva_emoji}", data=f"page({(max_pages - 1) if page == 0 else (page - 1)})"
+                f"◀️ Back {Eiva_emoji}",
+                data=f"page({(max_pages - 1) if page == 0 else (page - 1)})",
             ),
+            custom.Button.inline("• ❌ •", data="close"),
             custom.Button.inline(
-               f"• ❌ •", data="close"
-            ),
-            custom.Button.inline(
-               f"{Eiva_emoji} Next ▶️", data=f"page({0 if page == (max_pages - 1) else page + 1})"
+                f"{Eiva_emoji} Next ▶️",
+                data=f"page({0 if page == (max_pages - 1) else page + 1})",
             ),
         ]
     )
+
     return [max_pages, buttons]
-
-
-    modules = CMD_HELP
 if Config.BOT_USERNAME is not None and tgbot is not None:
     @tgbot.on(InlineQuery)  # pylint:disable=E0602
     async def inline_handler(event):
@@ -100,14 +97,14 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             veriler = button(0, sorted(CMD_HELP))
             apn = []
             for x in CMD_LIST.values():
-                for y in x:
-                    apn.append(y)
+                apn.extend(iter(x))
             result = await builder.article(
-                f"Hey! Only use .help please",
+                "Hey! Only use .help please",
                 text=f"🔰 **{Eiva_mention}**\n\n📜 __No.of Plugins__ : `{len(CMD_HELP)}` \n🗂️ __Commands__ : `{len(apn)}`\n🗒️ __Page__ : 1/{veriler[0]}",
                 buttons=veriler[1],
                 link_preview=False,
             )
+
         elif event.query.user_id == bot.uid and query.startswith("fsub"):
             hunter = event.pattern_match.group(1)
             Eiva = hunter.split("+")
@@ -117,7 +114,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             if not channel.username:
                 link = (await bot(ExportChatInviteRequest(channel))).link
             else:
-                link = "https://t.me/" + channel.username
+                link = f"https://t.me/{channel.username}"
             result = [
                 await builder.article(
                     title="force_sub",
@@ -177,12 +174,23 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         elif event.query.user_id == bot.uid and query == "repo":
             result = builder.article(
                 title="Repository",
-                text=f"**⚡ ɛɢɛռɖαʀʏ ᴀғ єιναϐοτ ⚡**",
+                text="**⚡ ɛɢɛռɖαʀʏ ᴀғ єιναϐοτ ⚡**",
                 buttons=[
-                    [Button.url("📑 Repo 📑", "https://github.com/Team-Andencento/Andencento")],
-                    [Button.url("🚀 Deploy 🚀", "https://github.com/Team-Andencento/Andencento")],
+                    [
+                        Button.url(
+                            "📑 Repo 📑",
+                            "https://github.com/Team-Andencento/Andencento",
+                        )
+                    ],
+                    [
+                        Button.url(
+                            "🚀 Deploy 🚀",
+                            "https://github.com/Team-Andencento/Andencento",
+                        )
+                    ],
                 ],
             )
+
 
         elif query.startswith("http"):
             part = query.split(" ")
@@ -271,9 +279,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             reply_pop_up_alert = "This is for other users!"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         else:
-            await event.edit(
-                f"🥴 **Bohot Ho gya\nPehli fursat me nikal**"
-            )
+            await event.edit("🥴 **Bohot Ho gya\\nPehli fursat me nikal**")
             await bot(functions.contacts.BlockRequest(event.query.user_id))
             target = await event.client(GetFullUserRequest(event.query.user_id))
             ok = event.query.user_id
@@ -291,7 +297,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
     async def on_pm_click(event):
         hunter = (event.data_match.group(1)).decode("UTF-8")
         Eiva = hunter.split("+")
-        if not event.sender_id == int(Eiva[0]):
+        if event.sender_id != int(Eiva[0]):
             return await event.answer("This Ain't For You!!", alert=True)
         try:
             await bot(GetParticipantRequest(int(Eiva[1]), int(Eiva[0])))
@@ -307,22 +313,21 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
 
     @tgbot.on(callbackquery.CallbackQuery(data=compile(b"reopen")))
     async def reopn(event):
-            if event.query.user_id == bot.uid or event.query.user_id in Config.SUDO_USERS:
-                current_page_number=0
-                simp = button(current_page_number, CMD_HELP)
-                veriler = button(0, sorted(CMD_HELP))
-                apn = []
-                for x in CMD_LIST.values():
-                    for y in x:
-                        apn.append(y)
-                await event.edit(
-                    f"🔰 **{Eiva_mention}**\n\n📜 __No.of Plugins__ : `{len(CMD_HELP)}` \n🗂️ __Commands__ : `{len(apn)}`\n🗒️ __Page__ : 1/{veriler[0]}",
-                    buttons=simp[1],
-                    link_preview=False,
-                )
-            else:
-                reply_pop_up_alert = "Hoo gya aapka. Kabse tapar tapar dabae jaa rhe h. Khudka bna lo na agr chaiye to. © ΣIVΛBθƬ ™"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+        if event.query.user_id == bot.uid or event.query.user_id in Config.SUDO_USERS:
+            current_page_number=0
+            simp = button(current_page_number, CMD_HELP)
+            veriler = button(0, sorted(CMD_HELP))
+            apn = []
+            for x in CMD_LIST.values():
+                apn.extend(iter(x))
+            await event.edit(
+                f"🔰 **{Eiva_mention}**\n\n📜 __No.of Plugins__ : `{len(CMD_HELP)}` \n🗂️ __Commands__ : `{len(apn)}`\n🗒️ __Page__ : 1/{veriler[0]}",
+                buttons=simp[1],
+                link_preview=False,
+            )
+        else:
+            reply_pop_up_alert = "Hoo gya aapka. Kabse tapar tapar dabae jaa rhe h. Khudka bna lo na agr chaiye to. © ΣIVΛBθƬ ™"
+            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         
 
     @tgbot.on(callbackquery.CallbackQuery(data=compile(b"close")))
@@ -341,8 +346,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         veriler = button(page, CMD_HELP)
         apn = []
         for x in CMD_LIST.values():
-            for y in x:
-                apn.append(y)
+            apn.extend(iter(x))
         if event.query.user_id == bot.uid or event.query.user_id in Config.SUDO_USERS:
             await event.edit(
                 f"🔰 **{Eiva_mention}**\n\n📜 __No.of Plugins__ : `{len(CMD_HELP)}`\n🗂️ __Commands__ : `{len(apn)}`\n🗒️ __Page__ : {page + 1}/{veriler[0]}",
@@ -366,10 +370,11 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         try:
             buttons = [
                 custom.Button.inline(
-                    "⚡ " + cmd[0] + " ⚡", data=f"commands[{commands}[{page}]]({cmd[0]})"
+                    f"⚡ {cmd[0]} ⚡", data=f"commands[{commands}[{page}]]({cmd[0]})"
                 )
                 for cmd in CMD_HELP_BOT[commands]["commands"].items()
             ]
+
         except KeyError:
             return await event.answer(
                 "No Description is written for this plugin", cache_time=0, alert=True
@@ -400,10 +405,10 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         commands = event.data_match.group(3).decode("UTF-8")
         result = f"**📗 File :**  `{cmd}`\n"
         if CMD_HELP_BOT[cmd]["info"]["info"] == "":
-            if not CMD_HELP_BOT[cmd]["info"]["warning"] == "":
+            if CMD_HELP_BOT[cmd]["info"]["warning"] != "":
                 result += f"**⚠️ Warning :**  {CMD_HELP_BOT[cmd]['info']['warning']}\n\n"
         else:
-            if not CMD_HELP_BOT[cmd]["info"]["warning"] == "":
+            if CMD_HELP_BOT[cmd]["info"]["warning"] != "":
                 result += f"**⚠️ Warning :**  {CMD_HELP_BOT[cmd]['info']['warning']}\n"
             result += f"**ℹ️ Info :**  {CMD_HELP_BOT[cmd]['info']['info']}\n\n"
         command = CMD_HELP_BOT[cmd]["commands"][commands]

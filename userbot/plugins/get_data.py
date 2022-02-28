@@ -50,9 +50,14 @@ def yaml_format(obj, indent=0):
                 formatted = yaml_format(v, indent)
                 if not formatted.strip():
                     continue
-                result.append(" " * (indent if has_multiple_items else 1))
-                result.append(f"{k}: {formatted}")
-                result.append("\n")
+                result.extend(
+                    (
+                        " " * (indent if has_multiple_items else 1),
+                        f"{k}: {formatted}",
+                        "\n",
+                    )
+                )
+
             result.pop()
             indent -= 2
             result.append(" " * indent)
@@ -65,11 +70,10 @@ def yaml_format(obj, indent=0):
         # repr() bytes if it's printable, hex like "FF EE BB" otherwise
         if all(c in PRINTABLE_SET for c in obj):
             result.append(repr(obj))
+        elif len(obj) > BYTE_LEN_MAX:
+            result.append("<…>")
         else:
-            if len(obj) > BYTE_LEN_MAX:
-                result.append("<…>")
-            else:
-                result.append(" ".join(f"{b:02X}" for b in obj))
+            result.append(" ".join(f"{b:02X}" for b in obj))
     elif isinstance(obj, datetime.datetime):
         # ISO-8601 without timezone offset (telethon dates are always UTC)
         result.append(obj.strftime("%Y-%m-%d %H:%M:%S"))
@@ -78,9 +82,7 @@ def yaml_format(obj, indent=0):
         result.append("\n")
         indent += 2
         for x in obj:
-            result.append(" " * indent)
-            result.append(yaml_format(x, indent))
-            result.append("\n")
+            result.extend((" " * indent, yaml_format(x, indent), "\n"))
         result.pop()
         indent -= 2
         result.append(" " * indent)

@@ -48,15 +48,14 @@ async def _(event):
             await eod(userevent,
                 "Can you kindly disable your forward privacy settings for good?"
             )
+        elif response.text.startswith("Select"):
+            await eod(userevent,
+                "`Please go to` @DrWebBot `and select your language.`"
+            )
         else:
-            if response.text.startswith("Select"):
-                await eod(userevent,
-                    "`Please go to` @DrWebBot `and select your language.`"
-                )
-            else:
-                await userevent.edit(
-                    f"**Antivirus scan was completed. I got the final results.**\n\n {response.message.message}"
-                )
+            await userevent.edit(
+                f"**Antivirus scan was completed. I got the final results.**\n\n {response.message.message}"
+            )
 
 
 @Andencento.on(admin_cmd(pattern=r"decode$", outgoing=True))
@@ -74,9 +73,10 @@ async def parseqr(qr_e):
         "-X",
         "POST",
         "-F",
-        "f=@" + downloaded_file_name + "",
+        f"f=@{downloaded_file_name}",
         "https://zxing.org/w/decode",
     ]
+
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
         # stdout must a pipe to be accessible as process.stdout
@@ -119,9 +119,7 @@ async def _(event):
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
-            message = ""
-            for m in m_list:
-                message += m.decode("UTF-8") + "\r\n"
+            message = "".join(m.decode("UTF-8") + "\r\n" for m in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -164,9 +162,7 @@ async def make_qr(makeqr):
             m_list = None
             with open(downloaded_file_name, "rb") as file:
                 m_list = file.readlines()
-            message = ""
-            for media in m_list:
-                message += media.decode("UTF-8") + "\r\n"
+            message = "".join(media.decode("UTF-8") + "\r\n" for media in m_list)
             os.remove(downloaded_file_name)
         else:
             message = previous_message.message
@@ -263,9 +259,11 @@ async def currencylist(ups):
     request_url = "https://api.exchangeratesapi.io/latest?base=USD"
     current_response = requests.get(request_url).json()
     dil_wale_puch_de_na_chaaa = current_response["rates"]
-    hmm = ""
-    for key, value in dil_wale_puch_de_na_chaaa.items():
-        hmm += f"`{key}`" + "\t\t\t"
+    hmm = "".join(
+        f"`{key}`" + "\t\t\t"
+        for key, value in dil_wale_puch_de_na_chaaa.items()
+    )
+
     await eor(ups, f"**List of some currencies:**\n{hmm}\n")
 
 
@@ -375,8 +373,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     sample_url = "https://da.gd/dns/{}".format(input_str)
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await eor(event, "DNS records of [This link]({}) are \n{}".format(input_str, response_api, link_preview=False))
     else:
         await eod(event, "i can't seem to find [this link]({}) on the internet".format(input_str, link_preview=False))
@@ -389,8 +386,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     sample_url = "https://da.gd/s?url={}".format(input_str)
-    response_api = requests.get(sample_url).text
-    if response_api:
+    if response_api := requests.get(sample_url).text:
         await eor(event, f"**Generated  [short link]({response_api})** \n**Long link :** [here]({input_str})", link_preview=True)
     else:
         await eod(event, "something is wrong. please try again later.")
@@ -403,7 +399,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     if not input_str.startswith("http"):
-        input_str = "http://" + input_str
+        input_str = f"http://{input_str}"
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
         await eor(event, "Input URL: [Short Link]({}) \nReDirected URL: [Long link]({})".format(input_str, r.headers["Location"], link_preview=False)

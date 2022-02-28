@@ -65,23 +65,20 @@ async def _(event):
 @Andencento.on(admin_cmd(pattern="dm ?(.*)"))
 @Andencento.on(sudo_cmd(pattern="dm ?(.*)", allow_sudo=True))
 async def _(event):
-    if len(event.text) > 3:
-        if not event.text[3] == " ":
-            return
+    if len(event.text) > 3 and event.text[3] != " ":
+        return
     d = event.pattern_match.group(1)
     c = d.split(" ")
     try:
         chat_id = await get_user_id(c[0])
     except Exception as e:
         return await eod(event, f"`{e}`")
-    msg = ""
     hunter = await event.get_reply_message()
     if event.reply_to_msg_id:
         await bot.send_message(chat_id, hunter)
         await eod(event, "**[Done]**")
-    for i in c[1:]:
-        msg += i + " "
-    if msg == "":
+    msg = "".join(f'{i} ' for i in c[1:])
+    if not msg:
         return
     try:
         await bot.send_message(chat_id, msg)

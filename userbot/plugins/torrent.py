@@ -39,8 +39,10 @@ async def tor_search(event):
         )
     else:
         res = requests.get(
-            "https://www.torrentdownloads.me/search/?search=" + search_str, headers
+            f"https://www.torrentdownloads.me/search/?search={search_str}",
+            headers,
         )
+
     source = bs(res.text, "lxml")
     urls = []
     magnets = []
@@ -52,11 +54,7 @@ async def tor_search(event):
             title = title[20:]
             titles.append(title)
             urls.append("https://www.torrentdownloads.me" + div.p.a["href"])
-        except KeyError:
-            pass
-        except TypeError:
-            pass
-        except AttributeError:
+        except (KeyError, TypeError, AttributeError):
             pass
         if counter == 15:
             break
@@ -165,7 +163,7 @@ def search_idop_se(search_query):
 
 def search_torrentz_eu(search_query):
     r = []
-    url = "https://torrentz2eu.org/searchA?safe=1&f=" + search_query + ""
+    url = f"https://torrentz2eu.org/searchA?safe=1&f={search_query}"
     scraper = cfscrape.create_scraper()  # returns a CloudflareScraper instance
     raw_html = scraper.get(url).content
     # print(raw_html)

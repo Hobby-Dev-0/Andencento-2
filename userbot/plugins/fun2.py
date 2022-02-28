@@ -178,7 +178,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 3
-    animation_ttl = range(0, 103)
+    animation_ttl = range(103)
     await eor(event, "Starting asf")
     animation_chars = [
         "1 ❤️ love story",
@@ -225,7 +225,7 @@ async def pressf(f):
         for line in F_LENGTHS:
             c = max(round(line / len(arg)), 1)
             out += (arg * c) + "\n"
-        await eor(f"`" + out + "`")
+        await eor(f"`{out}`")
 
 
 @Andencento.on(admin_cmd(pattern="session$", outgoing=True))
@@ -242,8 +242,7 @@ async def _(event):
 async def payf(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         paytext = input_str
         pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
             paytext * 8,
@@ -292,40 +291,36 @@ async def hmm(user):
     await eor(user, factuser)
 
 
-CmdHelp("fun2").add_command(
-  "join", None, "Use and see"
+CmdHelp("fun2").add_command("join", None, "Use and see").add_command(
+    "bf", None, "Use and see"
+).add_command("push", None, "Use and see").add_command(
+    "lovestory", None, "Use and see"
 ).add_command(
-  "bf", None, "Use and see"
+    "session", None, "Use and see"
 ).add_command(
-  "push", None, "Use and see"
+    "ohh", None, "Use and see"
 ).add_command(
-  "lovestory", None, "Use and see"
+    "suckit", None, "Use and see"
 ).add_command(
-  "session", None, "Use and see"
+    "work", None, "Use and see"
 ).add_command(
-  "ohh", None, "Use and see"
+    "aag", None, "Use and see"
 ).add_command(
-  "suckit", None, "Use and see"
+    "climb", None, "Use and see"
 ).add_command(
-  "work", None, "Use and see"
+    "pay", None, "Use and see"
 ).add_command(
-  "aag", None, "Use and see"
+    "pat", "<reply> or <@username>", "Pats the user."
 ).add_command(
-  "climb", None, "Use and see"
+    "cat", None, "Sends you some random cat facial text art"
 ).add_command(
-  "pay", None, "Use and see"
+    "why", None, "Asks some random funny questions"
 ).add_command(
-  "pat", "<reply> or <@username>", "Pats the user."
+    "fact", None, "Sends you some random facts"
 ).add_command(
-  "cat", None, "Sends you some random cat facial text art"
-).add_command(
-  "why", None, "Asks some random funny questions"
-).add_command(
-  "fact", None, "Sends you some random facts"
-).add_command(
-  "ftext", "<text>", "Writes your text in "F" format"
+    "ftext", "<text>", "Writes your text in "
 ).add_info(
-  "Bakchodi h bass."
+    "Bakchodi h bass."
 ).add_warning(
-  "✅ Harmless Module."
+    "✅ Harmless Module."
 ).add()

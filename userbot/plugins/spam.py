@@ -17,7 +17,7 @@ async def spammer(e):
         message = e.text
         counter = int(message[6:8])
         spam_message = str(e.text[8:])
-        await asyncio.wait([e.respond(spam_message) for i in range(counter)])
+        await asyncio.wait([e.respond(spam_message) for _ in range(counter)])
         await e.delete()
         await e.client.send_message(
             lg_id, f"#SPAM \n\nSpammed  `{counter}`  messages!!"
@@ -31,7 +31,7 @@ async def bigspam(user):
         user_msg = user.text
         userbot_count = int(user_msg[9:13])
         user_spam = str(user.text[13:])
-        for i in range(1, userbot_count):
+        for _ in range(1, userbot_count):
             await user.respond(user_spam)
         await user.delete()
         await user.client.send_message(
@@ -70,11 +70,10 @@ async def tiny_pic_spam(e):
             not reply_message
             or not e.reply_to_msg_id
             or not reply_message.media
-            or not reply_message.media
         ):
             return await e.edit("```Reply to a pic/sticker/gif/video message```")
         message = reply_message.media
-        for i in range(1, counter):
+        for _ in range(1, counter):
             await e.client.send_file(e.chat_id, message)
     except:
         return await e.reply(

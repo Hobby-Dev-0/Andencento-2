@@ -20,19 +20,21 @@ async def _(magisk):
         return
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk_files/"
     magisk_dict = {
-        "⦁ **Stable**": magisk_repo + "master/stable.json",
-        "⦁ **Beta**": magisk_repo + "master/beta.json",
-        "⦁ **Canary**": magisk_repo + "canary/canary.json",
+        "⦁ **Stable**": f'{magisk_repo}master/stable.json',
+        "⦁ **Beta**": f'{magisk_repo}master/beta.json',
+        "⦁ **Canary**": f'{magisk_repo}canary/canary.json',
     }
+
     releases = "**Latest Magisk Releases**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
         if "canary" in release_url:
-            data["app"]["link"] = magisk_repo + "canary/" + data["app"]["link"]
-            data["magisk"]["link"] = magisk_repo + "canary/" + data["magisk"]["link"]
+            data["app"]["link"] = f'{magisk_repo}canary/' + data["app"]["link"]
+            data["magisk"]["link"] = f'{magisk_repo}canary/' + data["magisk"]["link"]
             data["uninstaller"]["link"] = (
-                magisk_repo + "canary/" + data["uninstaller"]["link"]
+                f'{magisk_repo}canary/' + data["uninstaller"]["link"]
             )
+
 
         releases += (
             f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
@@ -63,8 +65,7 @@ async def device_info(request):
             "certified-android-devices/master/by_device.json"
         ).text
     )
-    results = data.get(codename)
-    if results:
+    if results := data.get(codename):
         reply = f"**Search results for {codename}**:\n\n"
         for item in results:
             reply += (
@@ -104,12 +105,12 @@ async def codename_info(request):
     )
     devices_lower = {k.lower(): v for k, v in data.items()}  # Lower brand names in JSON
     devices = devices_lower.get(brand)
-    results = [
+    if results := [
         i
         for i in devices
-        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
-    ]
-    if results:
+        if i["name"].lower() == device.lower()
+        or i["model"].lower() == device.lower()
+    ]:
         reply = f"**Search results for {brand} {device}**:\n\n"
         if len(results) > 8:
             results = results[:8]

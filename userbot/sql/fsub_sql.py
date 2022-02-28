@@ -31,8 +31,7 @@ def add_fsub(chat_id, usrname):
 
 
 def rem_fsub(chat_id):
-    rem = SESSION.query(Fsub).get(str(chat_id))
-    if rem:
+    if rem := SESSION.query(Fsub).get(str(chat_id)):
         SESSION.delete(rem)
         SESSION.commit()
 
